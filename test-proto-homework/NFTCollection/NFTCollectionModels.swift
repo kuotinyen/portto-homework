@@ -26,6 +26,6 @@ extension NFTCollectionItem: Hashable {
     }
 
     static func == (lhs: NFTCollectionItem, rhs: NFTCollectionItem) -> Bool {
-        lhs.nft?.collectionName == rhs.nft?.collectionName && lhs.nft?.name == rhs.nft?.name && lhs.nft?.imageUrl == rhs.nft?.imageUrl
+        lhs.hashValue == rhs.hashValue
     }
 }
