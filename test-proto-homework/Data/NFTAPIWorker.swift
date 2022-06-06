@@ -11,8 +11,16 @@ import Alamofire
 class NFTAPIWorker {
     func fetchNFTItems(offset: Int) async -> [NFTAsset]? {
         do {
-            let urlString = "https://api.opensea.io//api/v1/assets?format=json&owner=\(Const.Owner)&offset=\(offset)&limit=\(Const.Limit)"
-            return try await AF.request(urlString, headers: Const.Headers).serializingDecodable(NFTAssetListResponse.self).value.assets
+            let parameters: Parameters = [
+                "format": "json",
+                "owner": Const.Owner,
+                "offset": "\(offset)",
+                "limit": Const.Limit
+            ]
+            let urlString = "https://api.opensea.io//api/v1/assets"
+            return try await AF.request(urlString,parameters: parameters, headers: Const.Headers)
+                .serializingDecodable(NFTAssetListResponse.self)
+                .value.assets
         } catch {
             print("#### \(#function) failed, error: \(error)")
             return nil
