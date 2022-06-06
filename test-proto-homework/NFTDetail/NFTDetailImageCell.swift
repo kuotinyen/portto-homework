@@ -41,14 +41,9 @@ class NFTDetailImageCell: UICollectionViewCell {
     
     func populate(with imageUrl: URL) {
         SDWebImageManager.shared.loadImage(with: imageUrl, progress: nil) { [weak self] image, _, error, _, _, _ in
-            guard let self = self else { return }
-            
-            DispatchQueue.main.async {
-                if let image = image {
-                    self.imageView.image = image
-                    self.updateImageHeightConstraint(size: image.size)
-                }
-            }
+            guard let self = self, let image = image else { return }
+            self.imageView.image = image
+            self.updateImageHeightConstraint(size: image.size)
         }
     }
     

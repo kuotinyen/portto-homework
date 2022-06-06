@@ -50,9 +50,7 @@ class NFTCollectionCell: UICollectionViewCell {
     func populate(with item: NFTCollectionItem) {
         nameLabel.text = item.nft?.name
         SDWebImageManager.shared.loadImage(with: item.nft?.imageUrl, progress: nil) { image, _, error, _, _, _ in
-            DispatchQueue.main.async {
-                self.imageView.image = image
-            }
+            self.imageView.image = image
         }
     }
 }
