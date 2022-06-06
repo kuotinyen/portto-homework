@@ -36,9 +36,6 @@ class NFTDetailTextCell: UICollectionViewCell {
     
     func populate(with text: String) {
         textLabel.text = text
-        
-        // To test multiple line
-//        textLabel.text = text + text + text + text + text + text + text + text + text + text + text + text
     }
 }
 
