@@ -48,7 +48,7 @@ class NFTDetailImageCell: UICollectionViewCell {
     }
     
     private func updateImageHeightConstraint(size: CGSize) {
-        let height = UIScreen.main.bounds.width * size.height / size.width
+        let height = contentView.frame.width * size.height / size.width
         imageView.snp.updateConstraints { make in
             heightConstraint = make.height.equalTo(height).priority(.high).constraint
         }
