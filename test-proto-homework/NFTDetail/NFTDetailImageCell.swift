@@ -35,7 +35,7 @@ class NFTDetailImageCell: UICollectionViewCell {
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-            heightConstraint = make.height.equalTo(0).constraint
+            heightConstraint = make.height.equalTo(0).priority(.high).constraint
         }
     }
     
@@ -55,7 +55,7 @@ class NFTDetailImageCell: UICollectionViewCell {
     private func updateImageHeightConstraint(size: CGSize) {
         let height = UIScreen.main.bounds.width * size.height / size.width
         imageView.snp.updateConstraints { make in
-            heightConstraint = make.height.equalTo(height).constraint
+            heightConstraint = make.height.equalTo(height).priority(.high).constraint
         }
         
         didUpdateImageHeight?()
