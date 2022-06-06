@@ -18,19 +18,17 @@ class NFTCollectionViewController: UIViewController {
     
     weak var coordinator: Coordinator?
     
-    #warning("TODO: Test every viewState with loadingView, emptyView")
-    private var collectionView: UICollectionView!
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeCollectionViewLayout())
     private var loadingView = IndicatorView()
     private let infiniteScrollingIndicatorView = IndicatorView()
     
-    #warning("TODO: Dummy Empty view")
     private var emptyView: UIView = {
         let backgroundView = UIView()
         backgroundView.backgroundColor = .red
         return backgroundView
     }()
     
-    private var dataSource: DataSource!
+    private var dataSource: DataSource?
     private let viewModel = ViewModel()
     private var bag = Set<AnyCancellable>()
     
@@ -47,7 +45,7 @@ class NFTCollectionViewController: UIViewController {
 
 extension NFTCollectionViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let item = dataSource.itemIdentifier(for: indexPath), let nft = item.nft else { return }
+        guard let item = dataSource?.itemIdentifier(for: indexPath), let nft = item.nft else { return }
         coordinator?.navigateToDetailPage(nft: nft)
     }
 }
@@ -120,7 +118,7 @@ extension NFTCollectionViewController {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.main])
         snapshot.appendItems(items, toSection: .main)
-        dataSource.apply(snapshot, animatingDifferences: false)
+        dataSource?.apply(snapshot, animatingDifferences: false)
     }
     
     private func setupDataSource() {
@@ -139,7 +137,6 @@ extension NFTCollectionViewController {
         view.backgroundColor = .white
         title = "NFT Assets"
         
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeCollectionViewLayout())
         collectionView.delegate = self
         
         view.addSubview(collectionView)

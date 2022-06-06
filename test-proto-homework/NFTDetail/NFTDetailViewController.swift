@@ -16,8 +16,8 @@ class NFTDetailViewController: UIViewController {
     
     weak var coordinator: Coordinator?
     
-    private var collectionView: UICollectionView!
-    private var dataSource: DataSource!
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeCollectionViewLayout())
+    private var dataSource: DataSource?
     private var nft: NFTAsset? { coordinator?.nft }
     
     override func viewDidLoad() {
@@ -58,7 +58,7 @@ extension NFTDetailViewController {
             snapshot.appendItems([Item.init(itemType: .text(description))], toSection: .description)
         }
         
-        dataSource.apply(snapshot, animatingDifferences: false)
+        dataSource?.apply(snapshot, animatingDifferences: false)
     }
     
     private func setupDataSource() {
@@ -91,8 +91,6 @@ extension NFTDetailViewController {
     // MARK: Views
     
     private func setupCollectionView() {
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeCollectionViewLayout())
-        
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.edges.equalTo(view.layoutMarginsGuide)
